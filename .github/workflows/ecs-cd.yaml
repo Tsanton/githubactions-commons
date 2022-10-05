@@ -60,7 +60,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Update and deploy ECS task revision
-        uses: Tsanton/pda-githubactions-commons/docker-compose-build-action@main
+        uses: Tsanton/pda-githubactions-commons/ecs-deploy-action@main
         with:
           task_definition_family_name: ${{ inputs.task_definition_family_name }}
           task_definition_container_name: ${{ inputs.task_definition_container_name }}
