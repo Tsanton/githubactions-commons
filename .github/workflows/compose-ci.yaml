@@ -72,6 +72,10 @@ jobs:
           role-to-assume: ${{ inputs.aws_role_arn }}
           aws-region: ${{ inputs.aws_region }}
 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
       - name: Docker compose build
         uses: Tsanton/pda-githubactions-commons/docker-compose-build-action@main
         with:
@@ -88,9 +92,9 @@ jobs:
           test_service_name: ${{ inputs.test_service_name }}
           additional_compose_test_files: ${{ inputs.additional_compose_test_files }}
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+      # - name: Login to Amazon ECR
+      #   id: login-ecr
+      #   uses: aws-actions/amazon-ecr-login@v1
 
       - name: Docker compose push
         uses: Tsanton/pda-githubactions-commons/docker-compose-push-action@main
