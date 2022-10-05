@@ -21,7 +21,7 @@ runs:
       run: |
         additional_compose_command=""
         delimiter=" "
-        declare -a array=(${{ inputs.additional_compose_files}})
+        declare -a array=(${{ inputs.additional_compose_test_files}})
         for element in "${array[@]}"; do additional_compose_command="$additional_compose_command -f "$element; done
 
         docker-compose -f ${{ inputs.compose_file }} $additional_compose_command run --rm ${{ inputs.test_service_name }}
