@@ -88,6 +88,10 @@ jobs:
           test_service_name: ${{ inputs.test_service_name }}
           additional_compose_test_files: ${{ inputs.additional_compose_test_files }}
 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
       - name: Docker compose push
         uses: Tsanton/pda-githubactions-commons/docker-compose-push-action@main
         with:
