@@ -52,10 +52,14 @@ jobs:
   build:
     name: docker compose ci
     runs-on: ubuntu-latest
-    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    
     permissions:
+      # These permissions are required to interact with GitHub's OIDC Token endpoint: https://github.com/aws-actions/configure-aws-credentials#usage
       id-token: write
       contents: read
+      # These permissions are required to publish tests results: https://github.com/EnricoMi/publish-unit-test-result-action#permissions
+      checks: write
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v3
