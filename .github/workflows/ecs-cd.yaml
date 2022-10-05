@@ -1,0 +1,68 @@
+name: ecs-cd
+
+on:
+  workflow_call:
+    inputs:
+      aws_region:
+        description: Which AWS region we're deploying to
+        type: string
+        required: true
+
+      aws_role_arn:
+        description: The ARN of the AWS role for GitHub Actions to assume
+        type: string
+        required: true
+
+      image:
+        description: The docker image to deploy
+        type: string
+        required: true
+
+      ecs_cluster_name:
+        description: The name of the ECS cluster your service is deployed in
+        type: string
+        required: true
+
+      ecs_service_name:
+        description: The name of the ECS service to update with a new task revision
+        required: true
+
+      task_definition_family_name:
+        description: The family name of task definition to update
+        type: string
+        required: true
+
+      task_definition_container_name:
+        description: The name of the container withing the task definition container array to update image tag for
+        type: string
+        required: true
+
+jobs:
+  build:
+    name: ecs cd
+    runs-on: ubuntu-latest
+
+    permissions:
+      # These permissions are required to interact with GitHub's OIDC Token endpoint: https://github.com/aws-actions/configure-aws-credentials#usage
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ inputs.aws_role_arn }}
+          aws-region: ${{ inputs.aws_region }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Update and deploy ECS task revision
+        uses: Tsanton/pda-githubactions-commons/docker-compose-build-action@main
+        with:
+          task_definition_family_name: ${{ inputs.task_definition_family_name }}
+          task_definition_container_name: ${{ inputs.task_definition_container_name }}
+          image: ${{ inputs.image }}
+          ecs_cluster_name: ${{ inputs.ecs_cluster_name }}
+          ecs_service_name: ${{ inputs.ecs_service_name }}

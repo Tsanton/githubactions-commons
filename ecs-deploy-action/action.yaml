@@ -1,0 +1,49 @@
+name: ecs-deploy
+description: Deploying new ECS task and prompting ECS service to update the task revision
+inputs:
+  task_definition_family_name:
+    description: The family name of task definition to update
+    type: string
+    required: true
+  
+  task_definition_container_name:
+    description: The name of the container withing the task definition container array to update image tag for
+    type: string
+    required: true
+
+  image:
+    description: The docker image to deploy
+    type: string
+    required: true
+
+  ecs_cluster_name:
+    description: The name of the ECS cluster your service is deployed in
+    type: string
+    required: true
+
+  ecs_service_name:
+    description: The name of the ECS service to update with a new task revision
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Download task definition
+      shell: bash
+      run: aws ecs describe-task-definition --task-definition ${{ inputs.task_definition_family_name }} --query taskDefinition > task-definition.json
+
+    - name: Update image tag in the Amazon ECS task definition
+      id: task-definition-rendering
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: task-definition.json
+        container-name: ${{ inputs.task_definition_container_name }}   
+        image: ${{ inputs.image }}
+
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-definition-rendering.outputs.task-definition }}
+        cluster: ${{ inputs.ecs_cluster_name }}  
+        service: ${{ inputs.ecs_service_name }}   
+        wait-for-service-stability: true
