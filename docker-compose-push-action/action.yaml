@@ -1,9 +1,16 @@
 name: docker-compose-push
 description: Push to repository with docker-compose
 inputs:
-  compose_file:
-    description: "absolute file path to compose file"
+  compose_file_path:
+    description: The path to the compose file we're building (with trailing slash)
+    type: string
     required: true
+
+  compose_file_name:
+    description: The name of the main compose file
+    type: string
+    required: true
+
   tags:
     description: "tags to push"
     required: true
@@ -14,7 +21,7 @@ runs:
     - name: Docker compose push
       shell: bash
       run: |
-        serviceImage=$(yq  -r '.services.*.image' ${{ inputs.compose_file}})
+        serviceImage=$(yq  -r '.services.*.image' ${{ inputs.compose_file_path}})${{ inputs.compose_file_name}})
         substr=":"
         baseImage=${serviceImage%%$substr*}
         

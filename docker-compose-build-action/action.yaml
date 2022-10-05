@@ -1,13 +1,32 @@
 name: docker-compose-build
 description: Build docker image with docker-compose
 inputs:
-  compose_file:
-    description: "absolute file path to compose file"
+  compose_file_path:
+    description: The path to the compose file we're building (with trailing slash)
+    type: string
     required: true
+
+  compose_file_name:
+    description: The name of the main compose file
+    type: string
+    required: true
+
+  additional_compose_build_files:
+    description: A literal block scalar with the absolute path of additional compose files to utilize during the build step
+    type: string
+    required: false
 
 runs:
   using: "composite"
   steps:
     - name: Docker compose build
       shell: bash
-      run: docker-compose -f ${{ inputs.compose_file }} build
+      # run: docker-compose -f ${{ inputs.compose_file }} build
+
+      run: |
+        additional_compose_command=""
+        delimiter=" "
+        declare -a array=(${{ inputs.additional_compose_build_files}})
+        for element in "${array[@]}"; do additional_compose_command="$additional_compose_command -f "$element; done
+
+        docker-compose -f ${{ inputs.compose_file_path }}${{ inputs.compose_file_name }} $additional_compose_command build

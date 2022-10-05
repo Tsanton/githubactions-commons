@@ -1,16 +1,22 @@
 name: docker-compose-test
 description: Testing with docker-compose
 inputs:
-  compose_file:
-    description: "absolute file path to compose file"
+  compose_file_path:
+    description: The path to the compose file we're building (with trailing slash)
+    type: string
     required: true
-  
+
+  compose_file_name:
+    description: The name of the main compose file
+    type: string
+    required: true
+
   test_service_name:
-    description: "The name of the test service to attach to"
+    description: The name of the service to run during docker-compose run tests
     required: true
   
   additional_compose_test_files:
-    description: "absolute file paths to additional compose files"
+    description: A literal block scalar with the absolute path of additional compose files to utilize during the test step
     required: false
 
 runs:
@@ -24,24 +30,18 @@ runs:
         declare -a array=(${{ inputs.additional_compose_test_files}})
         for element in "${array[@]}"; do additional_compose_command="$additional_compose_command -f "$element; done
 
-        docker-compose -f ${{ inputs.compose_file }} $additional_compose_command run --rm ${{ inputs.test_service_name }}
-
-    - name: view files
-      shell: bash
-      run: |
-        ls ./
-        ls ./application/
+        docker-compose -f ${{ inputs.compose_file_path }}${{ inputs.compose_file_name }} $additional_compose_command run --rm ${{ inputs.test_service_name }}
 
     - name: Publish test results
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
-        xunit_files: test-results/xunit/*.xml
+        xunit_files: ${{ inputs.compose_file_path }}test-results/xunit/*.xml
 
     - name: Publish coverage results
       uses: irongut/CodeCoverageSummary@v1.2.0
       with:
-        filename: ./test-results/coverage/coverage.xml
+        filename: ${{ inputs.compose_file_path }}test-results/coverage/coverage.xml
         format: markdown
         output: both
         badge: true
