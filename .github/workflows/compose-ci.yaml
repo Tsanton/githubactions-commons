@@ -77,7 +77,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Docker compose build
-        uses: Tsanton/pda-githubactions-commons/docker-compose-build-action@main
+        uses: Fremtind/pda-githubactions-commons/docker-compose-build-action@main
         with:
           compose_file_path: ${{ inputs.compose_file_path }}
           compose_file_name: ${{ inputs.compose_file_name }}
@@ -85,19 +85,15 @@ jobs:
 
       - name: Docker compose test
         if: ${{ inputs.run_test == true }}
-        uses: Tsanton/pda-githubactions-commons/docker-compose-test-action@main
+        uses: Fremtind/pda-githubactions-commons/docker-compose-test-action@main
         with:
           compose_file_path: ${{ inputs.compose_file_path }}
           compose_file_name: ${{ inputs.compose_file_name }}
           test_service_name: ${{ inputs.test_service_name }}
           additional_compose_test_files: ${{ inputs.additional_compose_test_files }}
 
-      # - name: Login to Amazon ECR
-      #   id: login-ecr
-      #   uses: aws-actions/amazon-ecr-login@v1
-
       - name: Docker compose push
-        uses: Tsanton/pda-githubactions-commons/docker-compose-push-action@main
+        uses: Fremtind/pda-githubactions-commons/docker-compose-push-action@main
         with:
           compose_file_path: ${{ inputs.compose_file_path }}
           compose_file_name: ${{ inputs.compose_file_name }}

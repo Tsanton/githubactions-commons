@@ -1,23 +1,19 @@
 # **Docker-Compose Test Action** #
 
-TBC
+## **Variables** ##
+
+See [this](../.github/workflows/compose-ci.yaml) file for variable explanation.
 
 ## **Invocation** ##
 
 ```yaml
-
-jobs:
-  build:
-    name: docker compose ci
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Docker compose test
-      uses: Tsanton/pda-githubactions-commons/docker-compose-test-action@main
-      with:
-        compose_file: ${{ inputs.compose_file }}
-        test_service_name: ${{ inputs.test_service_name }}   
-        additional_compose_test_files: ${{ inputs.additional_compose_files }}   
+- name: Docker compose test
+  uses: Fremtind/pda-githubactions-commons/docker-compose-test-action@main
+  with:
+    compose_file_path: ./
+    compose_file_name: docker-compose.yaml
+    test_service_name: testsuite
+    additional_compose_test_files: |
+      ./compose-files/docker-compose.testing.yaml
+      ./compose-files/docker-compose.ci-testing.yaml
 ```
