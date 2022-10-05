@@ -25,6 +25,7 @@ on:
 
       ecs_service_name:
         description: The name of the ECS service to update with a new task revision
+        type: string
         required: true
 
       task_definition_family_name:
