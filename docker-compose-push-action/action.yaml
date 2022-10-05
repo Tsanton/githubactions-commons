@@ -1,0 +1,28 @@
+name: docker-compose-push
+description: Push to repository with docker-compose
+inputs:
+  compose_file:
+    description: "absolute file path to compose file"
+    required: true
+  tags:
+    description: "tags to push"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Docker compose push
+      shell: bash
+      run: |
+        serviceImage=$(yq  -r '.services.*.image' ${{ inputs.compose_file}})
+        substr=":"
+        baseImage=${serviceImage%%$substr*}
+        
+        declare -a tagArray=(${{ inputs.tags }})
+
+        for element in "${tagArray[@]}"; do
+          imageTagName="${baseImage}:${element}"
+          docker tag $serviceImage $imageTagName
+          echo "pushing ${imageTagName}"
+          docker push ${imageTagName}
+        done

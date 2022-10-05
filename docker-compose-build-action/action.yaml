@@ -1,0 +1,13 @@
+name: docker-compose-build
+description: Build docker image with docker-compose
+inputs:
+  compose_file:
+    description: "absolute file path to compose file"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Docker compose build
+      shell: bash
+      run: docker-compose -f ${{ inputs.compose_file }} build

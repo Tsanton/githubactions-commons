@@ -1,0 +1,78 @@
+name: docker-compose-ci
+
+on: 
+  workflow_call:
+    inputs:
+      aws_region:
+        description: Which AWS region we're deploying to
+        type: string
+        required: true
+      
+      aws_role_arn:
+        description: The ARN of the AWS role for GitHub Actions to assume 
+        type: string
+        required: true
+
+      compose_file:
+        description: The path to the compose file we're building
+        type: string
+        required: true
+
+      additional_compose_build_files:
+        description: A literal block scalar with additional compose files to utilize during the build step
+        type: string
+        required: false
+
+      tags:
+        description: A literal block scalar with tags to push to docker registry
+        type: string
+        required: true
+
+      run_test:
+        description: Indicates whether or not to run tests
+        type: boolean
+        required: true
+
+      additional_compose_test_files:
+        description: A literal block scalar with additional compose files to utilize during the test step
+        type: string
+        required: false
+      
+      test_service_name:
+        description: The name of the service to run during docker-compose run tests
+        type: string
+        required: false
+
+jobs:
+  build:
+    name: docker compose ci
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ inputs.aws_role_arn }}
+        aws-region: ${{ inputs.aws_region }}
+
+
+    - name: Docker compose build
+      uses: Tsanton/pda-githubactions-commons/docker-compose-build-action@master
+      with:
+        compose_file: ${{ inputs.compose_file }}
+
+    - name: Docker compose test
+      if: ${{ inputs.run_test == true }} 
+      uses: Tsanton/pda-githubactions-commons/docker-compose-test-action@master
+      with:
+        compose_file: ${{ inputs.compose_file }}
+        test_service_name: ${{ inputs.test_service_name }}   
+        additional_compose_test_files: ${{ inputs.additional_compose_files }}   
+
+    - name: Docker compose push
+      uses: Tsanton/pda-githubactions-commons/docker-compose-push-action@master
+      with:
+        compose_file: ${{ inputs.compose_file }}
+        tags: ${{ inputs.tags }}
