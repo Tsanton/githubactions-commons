@@ -61,7 +61,6 @@ jobs:
         role-to-assume: ${{ inputs.aws_role_arn }}
         aws-region: ${{ inputs.aws_region }}
 
-
     - name: Docker compose build
       uses: Tsanton/pda-githubactions-commons/docker-compose-build-action@main
       with:
@@ -73,7 +72,7 @@ jobs:
       with:
         compose_file: ${{ inputs.compose_file }}
         test_service_name: ${{ inputs.test_service_name }}   
-        additional_compose_test_files: ${{ inputs.additional_compose_files }}   
+        additional_compose_test_files: ${{ inputs.additional_compose_test_files }}   
 
     - name: Docker compose push
       uses: Tsanton/pda-githubactions-commons/docker-compose-push-action@main
