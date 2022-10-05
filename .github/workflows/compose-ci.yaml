@@ -59,20 +59,20 @@ jobs:
 
 
     - name: Docker compose build
-      uses: Tsanton/pda-githubactions-commons/docker-compose-build-action@master
+      uses: Tsanton/pda-githubactions-commons/docker-compose-build-action@main
       with:
         compose_file: ${{ inputs.compose_file }}
 
     - name: Docker compose test
       if: ${{ inputs.run_test == true }} 
-      uses: Tsanton/pda-githubactions-commons/docker-compose-test-action@master
+      uses: Tsanton/pda-githubactions-commons/docker-compose-test-action@main
       with:
         compose_file: ${{ inputs.compose_file }}
         test_service_name: ${{ inputs.test_service_name }}   
         additional_compose_test_files: ${{ inputs.additional_compose_files }}   
 
     - name: Docker compose push
-      uses: Tsanton/pda-githubactions-commons/docker-compose-push-action@master
+      uses: Tsanton/pda-githubactions-commons/docker-compose-push-action@main
       with:
         compose_file: ${{ inputs.compose_file }}
         tags: ${{ inputs.tags }}
