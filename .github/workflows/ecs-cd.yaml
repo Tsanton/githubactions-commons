@@ -55,12 +55,8 @@ jobs:
           role-to-assume: ${{ inputs.aws_role_arn }}
           aws-region: ${{ inputs.aws_region }}
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
       - name: Update and deploy ECS task revision
-        uses: Tsanton/pda-githubactions-commons/ecs-deploy-action@main
+        uses: Fremtind/pda-githubactions-commons/ecs-deploy-action@main
         with:
           task_definition_family_name: ${{ inputs.task_definition_family_name }}
           task_definition_container_name: ${{ inputs.task_definition_container_name }}
