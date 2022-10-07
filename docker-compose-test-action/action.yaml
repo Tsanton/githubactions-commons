@@ -32,17 +32,17 @@ runs:
 
         docker-compose -f ${{ inputs.compose_file_path }}${{ inputs.compose_file_name }} $additional_compose_command run --rm ${{ inputs.test_service_name }}
 
-    - name: Publish test results
-      uses: EnricoMi/publish-unit-test-result-action@v2
-      if: always()
-      with:
-        xunit_files: ${{ inputs.compose_file_path }}test-results/xunit/**/*.xml
+   # - name: Publish test results
+   #   uses: EnricoMi/publish-unit-test-result-action@v2
+   #   if: always()
+   #   with:
+   #     xunit_files: ${{ inputs.compose_file_path }}test-results/xunit/**/*.xml
 
-    - name: Publish coverage results
-      uses: irongut/CodeCoverageSummary@v1.2.0
-      with:
-        filename: ${{ inputs.compose_file_path }}test-results/coverage/coverage.xml
-        format: markdown
-        output: both
-        badge: true
-        fail_below_min: false
+   # - name: Publish coverage results
+   #   uses: irongut/CodeCoverageSummary@v1.2.0
+   #   with:
+   #     filename: ${{ inputs.compose_file_path }}test-results/coverage/coverage.xml
+   #     format: markdown
+   #     output: both
+   #     badge: true
+   #     fail_below_min: false
