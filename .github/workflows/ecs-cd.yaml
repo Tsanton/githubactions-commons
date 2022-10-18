@@ -50,13 +50,13 @@ jobs:
 
     steps:
       - name: Configure AWS Credentials
-        uses: Fremtind/pda-githubactions-commons/configure-aws-credentials-1-action@main
+        uses: Fremtind/pda-githubactions-commons/actions/configure-aws-credentials-1@main
         with:
           role-to-assume: ${{ inputs.aws_role_arn }}
           aws-region: ${{ inputs.aws_region }}
 
       - name: Update and deploy ECS task revision
-        uses: Fremtind/pda-githubactions-commons/ecs-deploy-action@main
+        uses: Fremtind/pda-githubactions-commons/actions/ecs-deploy@main
         with:
           task_definition_family_name: ${{ inputs.task_definition_family_name }}
           task_definition_container_name: ${{ inputs.task_definition_container_name }}

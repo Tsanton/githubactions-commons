@@ -1,4 +1,4 @@
-# **Docker-Compose Test Action** #
+# **Docker-Compose Test** #
 
 ## **Variables** ##
 
@@ -8,7 +8,7 @@ See [this](../.github/workflows/compose-ci.yaml) file for variable explanation.
 
 ```yaml
 - name: Docker compose test
-  uses: Fremtind/pda-githubactions-commons/docker-compose-test-action@main
+  uses: Fremtind/pda-githubactions-commons/actions/docker-compose-test@main
   with:
     compose_file_path: ./
     compose_file_name: docker-compose.yaml

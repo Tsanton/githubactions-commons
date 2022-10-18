@@ -1,4 +1,4 @@
-# **Configure AWS credentials action** #
+# **Configure AWS credentials** #
 
 A wrapper action for the last version (by commit sha) that the organization has approved for usage
 
@@ -10,10 +10,10 @@ See [this](./action.yaml) file for variable explanation.
 
 ```yaml
 - name: Configure AWS credentials
-  uses: Fremtind/pda-githubactions-commons/configure-aws-credentials-1-action@main
+  uses: Fremtind/pda-githubactions-commons/actions/configure-aws-credentials-1@main
   with:
-    aws_region: eu-west-1
-    aws_role_arn: arn:aws:iam::123456789123:role/github-actions-cd
+    aws-region: eu-west-1
+    role-to-assume: arn:aws:iam::123456789123:role/github-actions-cd
 ```
 
 ## **Permissions** ##
