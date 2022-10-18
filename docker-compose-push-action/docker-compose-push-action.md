@@ -8,7 +8,7 @@ See [this](../.github/workflows/compose-ci.yaml) file for variable explanation.
 
 ```yaml
 - name: Configure AWS Credentials
-  uses: aws-actions/configure-aws-credentials@v1
+  uses: Fremtind/pda-githubactions-commons/configure-aws-credentials-1-action@main
   with:
     role-to-assume: arn:aws:iam::<aws-account-id>:role/<aws-iam-role-name>
     aws-region: eu-west-1

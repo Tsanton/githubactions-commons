@@ -1,0 +1,21 @@
+name: configure-aws-credentials-1
+description: Assume role credentials using the latest pre-approved 1.x.y version of the aws-actions/configure-aws-credentials
+inputs:
+  aws_region:
+    description: Which AWS region we're assuming role into
+    type: string
+    required: true
+
+  aws_role_arn:
+    description: The ARN of the AWS role for GitHub Actions to assume
+    type: string
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838
+      with:
+        role-to-assume: ${{ inputs.aws_role_arn }}
+        aws-region: ${{ inputs.aws_region }}

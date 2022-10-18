@@ -8,7 +8,7 @@ See [this](../.github/workflows/ecs-cd.yaml) file for variable explanation.
 
 ```yaml
 - name: Configure AWS Credentials
-  uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838
+  uses: Fremtind/pda-githubactions-commons/configure-aws-credentials-1-action@main
   with:
     role-to-assume: arn:aws:iam::<aws-account-id>:role/<aws-iam-role-name>
     aws-region: <aws-region>
