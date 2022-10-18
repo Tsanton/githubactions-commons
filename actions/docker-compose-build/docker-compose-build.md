@@ -1,4 +1,4 @@
-# **Docker-Compose Build Action** #
+# **Docker-Compose Build** #
 
 ## **Variables** ##
 
@@ -8,7 +8,7 @@ See [this](../.github/workflows/compose-ci.yaml) file for variable explanation.
 
 ```yaml
 - name: Docker compose build
-  uses: Fremtind/pda-githubactions-commons/docker-compose-build-action@main
+  uses: Fremtind/pda-githubactions-commons/actions/docker-compose-build@main
   with:
     compose_file_path: ./
     compose_file_name: docker-compose.yaml

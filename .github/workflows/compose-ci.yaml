@@ -67,7 +67,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Configure AWS Credentials
-        uses: Fremtind/pda-githubactions-commons/configure-aws-credentials-1-action@main
+        uses: Fremtind/pda-githubactions-commons/actions/configure-aws-credentials-1@main
         with:
           role-to-assume: ${{ inputs.aws_role_arn }}
           aws-region: ${{ inputs.aws_region }}
@@ -77,7 +77,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Docker compose build
-        uses: Fremtind/pda-githubactions-commons/docker-compose-build-action@main
+        uses: Fremtind/pda-githubactions-commons/actions/docker-compose-build@main
         with:
           compose_file_path: ${{ inputs.compose_file_path }}
           compose_file_name: ${{ inputs.compose_file_name }}
@@ -85,7 +85,7 @@ jobs:
 
       - name: Docker compose test
         if: ${{ inputs.run_test == true }}
-        uses: Fremtind/pda-githubactions-commons/docker-compose-test-action@main
+        uses: Fremtind/pda-githubactions-commons/actions/docker-compose-test@main
         with:
           compose_file_path: ${{ inputs.compose_file_path }}
           compose_file_name: ${{ inputs.compose_file_name }}
@@ -93,7 +93,7 @@ jobs:
           additional_compose_test_files: ${{ inputs.additional_compose_test_files }}
 
       - name: Docker compose push
-        uses: Fremtind/pda-githubactions-commons/docker-compose-push-action@main
+        uses: Fremtind/pda-githubactions-commons/actions/docker-compose-push@main
         with:
           compose_file_path: ${{ inputs.compose_file_path }}
           compose_file_name: ${{ inputs.compose_file_name }}
