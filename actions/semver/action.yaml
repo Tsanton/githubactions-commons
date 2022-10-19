@@ -40,7 +40,7 @@ runs:
       with:
         useConfigFile: true
         targetPath: ${{ inputs.semantic_versioning_file_path }}
-        configFilePath: semver.yml
+        # configFilePath: semver.yml
 
         # additionalArguments: '/showConfig'
 
