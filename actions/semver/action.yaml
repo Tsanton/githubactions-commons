@@ -11,6 +11,8 @@ inputs:
     required: true
 
 outputs:
+  test:
+    value: echo-string
   major:
     description: XXXX
     value: ${{ steps.semver.outputs.major }}
