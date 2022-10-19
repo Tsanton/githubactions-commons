@@ -1,0 +1,57 @@
+name: semver
+description: XXXXXXXXXXX
+inputs:
+  tag_repo:
+    description: XXXXXXX
+    type: bool
+    required: true
+
+  semantic_versioning_file_path:
+    description: XXXXXXX
+    type: string
+    required: true
+
+outputs:
+  major:
+    description: XXXX
+    value: ${{ steps.semver.outputs.major }}
+  minor:
+    description: XXXX
+    value: ${{ steps.semver.outputs.minor }}
+  patch:
+    description: XXXX
+    value: ${{ steps.semver.outputs.patch }}
+  semver:
+    description: XXXX
+    value: ${{ steps.semver.outputs.semVer }}
+  major_minor_patch:
+    description: XXXX
+    value: ${{ steps.semver.outputs.majorMinorPatch }}
+
+
+runs:
+  using: "composite"
+  steps:
+    # - name: Install GitVersion
+    #   uses: gittools/actions/gitversion/setup@v0.9.7
+    #   with:
+    #     versionSpec: '5.5.x'
+    - name: semver
+      uses: gittools/actions/gitversion/execute@v0.9.7
+      with:
+        useConfigFile: true
+        targetPath: {{ inputs.semantic_versioning_file_path }}
+        configFilePath: semver.yml
+        # additionalArguments: '/showConfig'
+
+    # - name: Tag with version and latest
+    #   if: {{ inputs.tag_repo }}
+    #   env:
+    #     GIT_TAG: ${{ steps.semver.outputs.MajorMinorPatch }}
+    #   run: |
+    #     git config user.name github-actions
+    #     git config user.email github-actions@github.com
+    #     git push -f origin :refs/tags/latest
+    #     git tag -f $GIT_TAG
+    #     git tag -f latest
+    #     git push -f origin --tags
