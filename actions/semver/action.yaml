@@ -11,8 +11,6 @@ inputs:
     required: true
 
 outputs:
-  test:
-    value: echo-string
   major:
     description: XXXX
     value: ${{ steps.semver.outputs.major }}
@@ -43,6 +41,7 @@ runs:
         versionSpec: '5.5.x'
 
     - name: semver
+      id: semver
       uses: gittools/actions/gitversion/execute@v0.9.7
       with:
         useConfigFile: true
