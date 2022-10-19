@@ -32,8 +32,8 @@ runs:
   using: "composite"
   steps:
     - name: semver-file
-      run: |
-        touch ${{ inputs.semantic_versioning_file_path }}/semver.yml
+      shell: bash
+      run: touch ${{ inputs.semantic_versioning_file_path }}/semver.yml
     # - name: Install GitVersion
     #   uses: gittools/actions/gitversion/setup@v0.9.7
     #   with:
