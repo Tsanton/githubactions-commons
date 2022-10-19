@@ -26,9 +26,9 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: semver-file
-      shell: bash
-      run: touch ${{ inputs.semantic_versioning_file_path }}/semver.yml
+    # - name: semver-file
+    #   shell: bash
+    #   run: touch ${{ inputs.semantic_versioning_file_path }}/semver.yml
 
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.7
@@ -41,9 +41,7 @@ runs:
       with:
         useConfigFile: true
         targetPath: ${{ inputs.semantic_versioning_file_path }}
-        configFilePath: semver.yml
-        updateAssemblyInfo: true
-        updateAssemblyInfoFilename: ${{ inputs.semantic_versioning_file_path }}semver.yml
+        configFilePath: GitVersion.yml
         # additionalArguments: '/showConfig'
 
     # - name: Tag with version and latest
