@@ -1,10 +1,6 @@
 name: semver
 description: XXXXXXXXXXX
 inputs:
-  tag_repo:
-    description: XXXXXXX
-    type: bool
-    required: true
   semantic_versioning_file_path:
     description: XXXXXXX
     type: string
@@ -27,7 +23,6 @@ outputs:
     description: XXXX
     value: ${{ steps.semver.outputs.majorMinorPatch }}
 
-
 runs:
   using: "composite"
   steps:
@@ -47,7 +42,8 @@ runs:
         useConfigFile: true
         targetPath: ${{ inputs.semantic_versioning_file_path }}
         configFilePath: semver.yml
-
+        updateAssemblyInfo: true
+        updateAssemblyInfoFilename: true
         # additionalArguments: '/showConfig'
 
     # - name: Tag with version and latest
