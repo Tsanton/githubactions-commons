@@ -43,7 +43,7 @@ runs:
         targetPath: ${{ inputs.semantic_versioning_file_path }}
         configFilePath: semver.yml
         updateAssemblyInfo: true
-        # updateAssemblyInfoFilename: true
+        updateAssemblyInfoFilename: ${{ inputs.semantic_versioning_file_path }}semver.yml
         # additionalArguments: '/showConfig'
 
     # - name: Tag with version and latest
