@@ -34,10 +34,12 @@ runs:
     - name: semver-file
       shell: bash
       run: touch ${{ inputs.semantic_versioning_file_path }}/semver.yml
-    # - name: Install GitVersion
-    #   uses: gittools/actions/gitversion/setup@v0.9.7
-    #   with:
-    #     versionSpec: '5.5.x'
+
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.7
+      with:
+        versionSpec: '5.5.x'
+
     - name: semver
       uses: gittools/actions/gitversion/execute@v0.9.7
       with:
