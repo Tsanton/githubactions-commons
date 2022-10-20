@@ -31,6 +31,10 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Echo time
+      shell: bash
+      run: date '+%Y-%m-%dT%H:%M:%S'
+      
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.7
       with:
