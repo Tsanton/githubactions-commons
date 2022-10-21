@@ -1,0 +1,49 @@
+name: semver
+description: XXXXXXXXXXX
+inputs:
+  semantic_versioning_file_path:
+    description: XXXXXXX
+    type: string
+    required: true
+  semantic_versioning_file_name:
+    description: XXXXXXX
+    type: string
+    required: false
+    default: GitVersion.yml
+
+outputs:
+  major:
+    description: The major version
+    value: ${{ steps.semver.outputs.major }}
+  minor:
+    description: The minor version
+    value: ${{ steps.semver.outputs.minor }}
+  patch:
+    description: The patch
+    value: ${{ steps.semver.outputs.patch }}
+  semver:
+    description: the semver-version
+    value: ${{ steps.semver.outputs.semVer }}
+  major_minor_patch:
+    description: The major-minor-patch version
+    value: ${{ steps.semver.outputs.majorMinorPatch }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Echo time
+      shell: bash
+      run: date '+%Y-%m-%dT%H:%M:%S'
+      
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.7
+      with:
+        versionSpec: "5.10.3"
+
+    - name: semver
+      id: semver
+      uses: gittools/actions/gitversion/execute@v0.9.7
+      with:
+        useConfigFile: true
+        targetPath: ${{ inputs.semantic_versioning_file_path }}
+        configFilePath: ${{ inputs.semantic_versioning_file_name }}
