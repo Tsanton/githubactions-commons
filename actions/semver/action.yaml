@@ -5,11 +5,8 @@ inputs:
     description: XXXXXXX
     type: string
     required: true
-  semantic_versioning_file_name:
-    description: XXXXXXX
-    type: string
-    required: false
-    default: GitVersion.yml
+    default: ./GitVersion.yml
+    
 
 outputs:
   major:
@@ -46,4 +43,3 @@ runs:
       with:
         useConfigFile: true
         targetPath: ${{ inputs.semantic_versioning_file_path }}
-        configFilePath: ${{ inputs.semantic_versioning_file_name }}
