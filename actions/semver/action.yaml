@@ -2,10 +2,14 @@ name: semver
 description: XXXXXXXXXXX
 inputs:
   semantic_versioning_file_path:
-    description: XXXXXXX
+    description: The path to the semver config file. starts with './' and ends with '/' -> './semver-config/'
     type: string
     required: true
-    default: ./GitVersion.yml
+    default: ./
+  semantic_versioning_file_name:
+    description: The name of semver <config-file.yml>
+    type: string
+    required: false
     
 
 outputs:
@@ -43,3 +47,4 @@ runs:
       with:
         useConfigFile: true
         targetPath: ${{ inputs.semantic_versioning_file_path }}
+        configFilePath: ${{ inputs.semantic_versioning_file_name }}
