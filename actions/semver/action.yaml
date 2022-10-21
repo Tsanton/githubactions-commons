@@ -2,14 +2,10 @@ name: semver
 description: XXXXXXXXXXX
 inputs:
   semantic_versioning_file_path:
-    description: XXXXXXX
+    description: The path to the semver config file. starts with './'
     type: string
     required: true
-  semantic_versioning_file_name:
-    description: XXXXXXX
-    type: string
-    required: false
-    default: GitVersion.yml
+    default: ./GitVersion.yml
 
 outputs:
   major:
@@ -45,5 +41,4 @@ runs:
       uses: gittools/actions/gitversion/execute@v0.9.7
       with:
         useConfigFile: true
-        targetPath: ${{ inputs.semantic_versioning_file_path }}
-        configFilePath: ${{ inputs.semantic_versioning_file_name }}
+        configFilePath: ${{ inputs.semantic_versioning_file_path }}
