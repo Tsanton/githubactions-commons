@@ -2,7 +2,7 @@
 
 ## **Variables** ##
 
-See [this](../.github/workflows/ecs-cd.yaml) file for variable explanation.
+See [this](../../.github/workflows/ecs-cd.yaml) file for variable explanation.
 
 ## **Invocation** ##
 
