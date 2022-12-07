@@ -1,3 +1,3 @@
 # **githubactions-commons** #
 
-Reusable workflows for 'pda-githubactions-iam-bootstrap' enabled teams
+Reusable workflows for github actions
