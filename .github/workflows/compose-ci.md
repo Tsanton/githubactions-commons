@@ -20,7 +20,7 @@ jobs:
       aws_role_arn: "arn:aws:iam::123456789123:role/github-actions-cd"
       compose_file_path: ./application/
       compose_file_name: docker-compose.yaml
-      additional_compose_test_files: |
+      additional_compose_build_files: |
         ./application/docker-compose.build-override.yaml
       run_test: true
       additional_compose_test_files: |
